@@ -2,13 +2,16 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.myapplication.Adaptadores.AdaptadorRevista;
 import com.example.myapplication.Adaptadores.AdaptadorUsuarios;
+import com.example.myapplication.Modelos.Noticia;
 import com.example.myapplication.Modelos.Revista;
 import com.example.myapplication.Modelos.Usuario;
 import com.example.myapplication.R;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MainActivity6EvaFirstActividadREVISTA extends AppCompatActivity implements Asynchtask {
+public class MainActivity6EvaFirstActividadREVISTA extends AppCompatActivity implements Asynchtask,AdapterView.OnItemClickListener {
     ListView lstReviGeneral;
     ArrayList<Revista> lstRevistasXD;
     @Override
@@ -54,5 +57,16 @@ public class MainActivity6EvaFirstActividadREVISTA extends AppCompatActivity imp
         ArrayList<Revista> lstRevistasXD = Revista.JsonObjectsBuild(JSONlista);
         AdaptadorRevista adaptaRevista = new AdaptadorRevista(this, lstRevistasXD);
         lstReviGeneral.setAdapter(adaptaRevista);
+    }
+
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        Intent intent = new Intent(MainActivity6EvaFirstActividadREVISTA.this, MainActivity4VerNoticia.class);
+        Noticia noticia = (Noticia)adapterView.getItemAtPosition(i);
+        Bundle b = new Bundle();
+        b.putString("Titulo", noticia.getTitulo());
+        b.putString("Subtitulo",noticia.getSubtitulo());
+        intent.putExtras(b);
+        startActivity(intent);
+
     }
 }
